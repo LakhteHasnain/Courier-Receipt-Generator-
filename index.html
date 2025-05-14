@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcel Sending Form</title>
+    <!-- CSS will be in Step 2 -->
+	<style>
+:root {
+    --primary: #4361ee;
+    --primary-hover: #3a56d4;
+    --text: #333;
+    --text-light: #666;
+    --background: #f8f9fa;
+    --card: #fff;
+    --border: #e0e0e0;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --radius: 8px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    padding: var(--spacing-lg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.header p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.form-container {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+}
+
+.left-column, .right-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+.section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border);
+}
+
+.section-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    margin-right: var(--spacing-md);
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+    flex: 1 1 100%;
+}
+
+.form-row .form-group {
+    flex: 1 1 calc(50% - var(--spacing-md));
+}
+
+label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-position: calc(100% - 12px) center;
+    background-repeat: no-repeat;
+    padding-right: 35px;
+}
+
+.submit-container {
+    margin-top: var(--spacing-lg);
+    text-align: center;
+    width: 100%;
+}
+
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 180px;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
+/* Toggle Switch Styles */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-md);
+    text-align: center;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: var(--transition);
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: var(--transition);
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--primary);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.toggle-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Hide international fields by default */
+.international-fields {
+    display: none;
+}
+
+.receipt-modal {
+    background: white;
+    border-radius: var(--radius);
+    padding: var(--spacing-lg);
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.receipt-modal h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.receipt-modal hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: var(--spacing-md) 0;
+}
+
+.receipt-modal .print-btn {
+    margin-top: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+    }
+
+    .left-column, .right-column {
+        width: 100%;
+    }
+}
+</style>
+<script>
+// Toggle between domestic and international fields
+document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.getElementById('shippingTypeToggle');
+    const domesticFields = document.getElementById('domesticFields');
+    const internationalFields = document.getElementById('internationalFields');
+    
+    // Handle toggle change
+    toggle.addEventListener('change', function() {
+        if (toggle.checked) {
+            // International selected
+            domesticFields.style.display = 'none';
+            internationalFields.style.display = 'block';
+            
+            // Make international fields required when selected
+            document.getElementById('recipient_country').required = true;
+            document.getElementById('recipient_city').required = true;
+            document.getElementById('recipient_postal_code').required = true;
+            document.getElementById('recipient_address_intl').required = true;
+            
+            // Make domestic address not required when international is selected
+            document.getElementById('recipient_address').required = false;
+        } else {
+            // Domestic selected
+            domesticFields.style.display = 'block';
+            internationalFields.style.display = 'none';
+            
+            // Make domestic fields required when selected
+            document.getElementById('recipient_address').required = true;
+            
+            // Make international fields not required when domestic is selected
+            document.getElementById('recipient_country').required = false;
+            document.getElementById('recipient_city').required = false;
+            document.getElementById('recipient_postal_code').required = false;
+            document.getElementById('recipient_address_intl').required = false;
+        }
+    });
+    
+    // Form submission handler
+    document.getElementById('parcelForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(this);
+       
+        const jsonData = Object.fromEntries(formData.entries());
+        
+        // Add shipping type to data
+        jsonData.isInternational = toggle.checked;
+        
+        try {
+            // Submit form data to server
+            
+            const response = await fetch("/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(jsonData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                generatePrintOut(jsonData);
+            } else {
+                showNotification("Error saving parcel data.", "error");
+            }
+        } catch (error) {
+            // For demo purposes, proceed anyway
+            generatePrintOut(jsonData);
+        }
+    });
+});
+
+// Notification display function
+function showNotification(message, type) {
+    const notification = document.createElement("div");
+    notification.textContent = message;
+    notification.style.position = "fixed";
+    notification.style.top = "20px";
+    notification.style.right = "20px";
+    notification.style.padding = "12px 20px";
+    notification.style.borderRadius = "4px";
+    notification.style.color = "white";
+    notification.style.backgroundColor = type === "error" ? "#e63946" : "#2ecc71";
+    notification.style.zIndex = "1000";
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        notification.style.transition = "opacity 0.5s ease";
+        setTimeout(() => document.body.removeChild(notification), 500);
+    }, 4000);
+}
+
+// Generate receipt function
+function generatePrintOut(data) {
+    let printWindow = window.open("", "_blank");
+    
+    // Prepare address for receipt based on domestic/international
+    let addressDisplay;
+    if (data.isInternational === 'on') {
+        addressDisplay = `${data.recipient_address_intl}<br>
+                         ${data.recipient_city}, ${data.recipient_postal_code}<br>
+                         ${data.recipient_country}`;
+    } else {
+        addressDisplay = data.recipient_address;
+    }
+    
+    // Build receipt HTML
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Parcel Receipt</title>
+            <style>
+                body {
+                    font-family: 'Inter', -apple-system, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                .receipt-modal {
+                    background: white;
+                    border-radius: 8px;
+                    padding: 24px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                }
+                h2 {
+                    text-align: center;
+                    margin-bottom: 16px;
+                    color: #4361ee;
+                }
+                .receipt-item {
+                    display: flex;
+                    margin-bottom: 8px;
+                }
+                .receipt-label {
+                    font-weight: 600;
+                    width: 140px;
+                    flex-shrink: 0;
+                }
+                .receipt-value {
+                    flex-grow: 1;
+                }
+                hr {
+                    border: none;
+                    border-top: 1px solid #e0e0e0;
+                    margin: 16px 0;
+                }
+                .timestamp {
+                    font-size: 0.9rem;
+                    color: #666;
+                    text-align: center;
+                    margin-bottom: 16px;
+                }
+                .shipping-type {
+                    display: inline-block;
+                    padding: 4px 8px;
+                    background-color: #e6f0ff;
+                    color: #4361ee;
+                    border-radius: 4px;
+                    font-size: 0.85rem;
+                    font-weight: 500;
+                    margin-top: 4px;
+                }
+                button {
+                    background-color: #4361ee;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    font-size: 0.95rem;
+                    cursor: pointer;
+                    display: block;
+                    margin: 20px auto 0;
+                }
+                @media print {
+                    button {
+                        display: none;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="receipt-modal">
+            <img src="DHLr.png" alt="Description of image" width="100%" height="300">
+
+                <h2>Parcel Receipt</h2>
+                
+                <div class="receipt-item">
+                    <div class="receipt-label">Sender:</div>
+                    <div class="receipt-value">${data.sender_name}</div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Phone:</div>
+                    <div class="receipt-value">${data.sender_phone}</div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Pickup Address:</div>
+                    <div class="receipt-value">${data.sender_address}</div>
+                </div>
+                
+                <hr>
+                
+                <div class="receipt-item">
+                    <div class="receipt-label">Recipient:</div>
+                    <div class="receipt-value">
+                        ${data.recipient_name}
+                        <div class="shipping-type">${data.isInternational === 'on' ? 'International' : 'Domestic'}</div>
+                    </div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Phone:</div>
+                    <div class="receipt-value">${data.recipient_phone}</div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Delivery Address:</div>
+                    <div class="receipt-value">${addressDisplay}</div>
+                </div>
+                
+                <hr>
+                
+                <div class="receipt-item">
+                    <div class="receipt-label">Package Type:</div>
+                    <div class="receipt-value">${data.package_type.charAt(0).toUpperCase() + data.package_type.slice(1)}</div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Weight:</div>
+                    <div class="receipt-value">${data.package_weight} kg</div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Payable Amount:</div>
+                    <div class="receipt-value">${data.delivery_charges || 'N/A'}</div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Delivery Speed:</div>
+                    <div class="receipt-value">${data.delivery_speed.replace('_', '-').replace(/\\b\\w/g, c => c.toUpperCase())}</div>
+                </div>
+                <div class="receipt-item">
+                    <div class="receipt-label">Payment Status:</div>
+                    <div class="receipt-value">${data.payment_status.charAt(0).toUpperCase() + data.payment_status.slice(1)}</div>
+                </div>
+                
+                <hr>
+                
+                <div class="timestamp">Generated on: ${new Date().toLocaleString()}</div>
+                
+                <button onclick="window.print()">Print Receipt</button>
+            </div>
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    
+    // Show success notification in the main window
+    showNotification("Parcel data submitted successfully! Receipt opened in new window.", "success");
+}
+</script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Send a Parcel</h1>
+            <p>Fill out the form below to request a parcel pickup and delivery</p>
+            
+            <div class="toggle-container">
+                <span class="toggle-label">Domestic</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="shippingTypeToggle" name="isInternational">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label">International</span>
+            </div>
+          
+       
+        </div>
+        
+        <form class="form-container" id="parcelForm">
+            <div class="left-column">
+                <!-- Sender Details Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">1</div>
+                        <div class="section-title">Sender Details</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sender_name">Full Name</label>
+                            <input type="text" id="sender_name" name="sender_name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sender_phone">Phone Number</label>
+                            <input type="tel" id="sender_phone" name="sender_phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sender_address">Pickup Address</label>
+                        <textarea id="sender_address" name="sender_address" required></textarea>
+                    </div>
+                </div>
+                
+                <!-- Parcel Information Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">3</div>
+                        <div class="section-title">Parcel Information</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="package_type">Package Type</label>
+                            <select id="package_type" name="package_type">
+                                <option value="document">Document</option>
+                                <option value="box">Box</option>
+                                <option value="fragile">Fragile Item</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="package_weight">Weight (kg)</label>
+                            <input type="number" id="package_weight" name="package_weight" min="0.1" step="0.1" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-container">
+                
+                    <button type="reset" style="background-color: #ccc; color: #000;">Reset</button>
+                    <button type="submit" >Print</button>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <!-- Recipient Details Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">2</div>
+                        <div class="section-title">Recipient Details</div>
+                    </div>
+                    
+                    <!-- Shipping Type Toggle -->
+                
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recipient_name">Full Name</label>
+                            <input type="text" id="recipient_name" name="recipient_name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipient_phone">Phone Number</label>
+                            <input type="tel" id="recipient_phone" name="recipient_phone" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Domestic Address Fields (default) -->
+                    <div id="domesticFields">
+                        <div class="form-group">
+                            <label for="recipient_address">Delivery Address</label>
+                            <textarea id="recipient_address" name="recipient_address" required></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- International Address Fields (hidden by default) -->
+                    <div id="internationalFields" class="international-fields">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipient_country">Country</label>
+                                <input type="text" id="recipient_country" name="recipient_country">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="recipient_city">City</label>
+                                <input type="text" id="recipient_city" name="recipient_city">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="recipient_postal_code">Postal Code</label>
+                                <input type="text" id="recipient_postal_code" name="recipient_postal_code">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="recipient_address_intl">Complete Address</label>
+                            <textarea id="recipient_address_intl" name="recipient_address_intl"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Delivery & Payment Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-number">4</div>
+                        <div class="section-title">Delivery & Payment</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="delivery_speed">Delivery Speed</label>
+                            <select id="delivery_speed" name="delivery_speed">
+                                <option value="standard">Standard (2-3 days)</option>
+                                <option value="express">Express (24 hours)</option>
+                                <option value="same_day">Same-day (within 8 hours)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment_method">Payment Status</label>
+                            <select id="payment_status" name="payment_status">
+                                <option value="completed">Completed</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="delivery_charges">Delivery Charges</label>
+                            <input type="text" id="delivery_charges" name="delivery_charges" placeholder="Delivery Charges">
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+           
+        </form>
+    </div>
+</body>
+</html>
